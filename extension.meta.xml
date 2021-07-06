@@ -17,6 +17,10 @@
 		</author>
 	</authors>
 	<releases>
+		<release version="1.6.3" date="2019-10-31" min="2.6.0" max="2.x.x">
+			- Add missing meta data for SVG uploads. Methods are taken from 'Field: Image Upload' extension. Thanks to @nitriques.
+			- This update will also auto update existing SVG upload entries, so there is no need to reupload existing SVG files.
+		</release>
 		<release version="1.6.2" date="2018-05-09" min="2.6.0" max="2.x.x">
 			- [#36](https://github.com/symphonists/multiuploadfield/issues/36) Fixes for meta data and empty files
 		</release>
