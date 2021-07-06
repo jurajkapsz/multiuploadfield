@@ -32,19 +32,29 @@
 		function createDroparea(index, field) {
 			var field = $(field),
 				files = field.find('.multiupload-files').addClass('multiupload-drop'),
-				controls = field.find('.apply').remove();
+				controls = field.find('.apply').remove(),
+				droparea = $('<div />', { class: 'multiupload-droparea' });
 
-			// Append drop area
-			$('<div />', {
-				class: 'multiupload-droparea',
-				html: '<span>' + Symphony.Language.get('Drop files') + '</span>',
+			// Drop area input
+			$('<input />', {
+				type: 'file',
+				multiple: 'multiple',
+				title: '',
 				on: {
 					dragover: drag,
 					dragenter: drag,
 					dragend: dragend,
-					drop: drop
+					drop: drop,
+					change: drop
 				}
-			}).appendTo(field);
+			}).appendTo(droparea);
+
+			// Drop area label
+			$('<span />', {
+				html: Symphony.Language.get('Drop files')
+			}).appendTo(droparea);
+
+			droparea.appendTo(field);
 		};
 
 		function drag(event) {
@@ -62,10 +72,13 @@
 			var dragarea = $(event.currentTarget).removeClass('multiupload-drag'),
 				field = dragarea.parents('.field-multiupload'),
 				files = field.find('.multiupload-files'),
-				list = field.find('ol');
+				list = field.find('ol'),
+				eventFiles = event.originalEvent.dataTransfer 
+							? event.originalEvent.dataTransfer.files 
+							: event.target.files;
 
 			// Loop over files
-			$.each(event.originalEvent.dataTransfer.files, function(index, file) {
+			$.each(eventFiles, function(index, file) {
 				files.removeClass('empty');
 
 				var item = $('<li />', {
@@ -75,6 +88,9 @@
 
 				send(field, item, file);
 			});
+
+			// Avoid any further processing of input field's value
+			field.find('.multiupload-droparea input').val('');
 		};
 
 		function stop(event) {

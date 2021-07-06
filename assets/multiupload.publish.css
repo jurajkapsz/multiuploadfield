@@ -194,7 +194,19 @@
 	text-align: center;
 	padding: 20px;
 	color: #b8b8b8;
+	position: relative;
 }
+
+.multiupload-droparea input {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	cursor: pointer;
+	opacity: 0;
+}
+
 .multiupload-drop.empty + .multiupload-droparea {
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
